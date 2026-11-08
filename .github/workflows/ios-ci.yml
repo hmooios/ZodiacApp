@@ -11,25 +11,27 @@ on:
       - master
 
 jobs:
-  inspect:
-    name: Inspect CI Environment
+  build:
+    name: Build ZodiacApp
     runs-on: macos-15
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Inspect installed Xcode versions
+      - name: Select Xcode 26.3
         run: |
-          echo "Available Xcode installations:"
-          ls -d /Applications/*.app | grep Xcode || true
-
-          echo "Selected Developer Directory:"
+          sudo xcode-select -s /Applications/Xcode_26.3.app/Contents/Developer
+          xcodebuild -version
           xcode-select -p
 
-          echo "Selected Xcode version:"
-          xcodebuild -version
-
-      - name: Inspect project format
+      - name: Build ZodiacApp
         run: |
-          grep "objectVersion" ZodiacApp.xcodeproj/project.pbxproj
+          xcodebuild \
+            -project ZodiacApp.xcodeproj \
+            -scheme ZodiacApp \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO \
+            build
