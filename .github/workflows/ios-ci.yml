@@ -11,33 +11,25 @@ on:
       - master
 
 jobs:
-  build:
-    name: Build ZodiacApp
+  inspect:
+    name: Inspect CI Environment
     runs-on: macos-15
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Show available Xcode versions
-        run: |
-          ls /Applications | grep Xcode
-
-      - name: Show available Xcode versions
+      - name: Inspect installed Xcode versions
         run: |
           echo "Available Xcode installations:"
-          ls -d /Applications/*.app | grep Xcode
+          ls -d /Applications/*.app | grep Xcode || true
 
-          echo "Selected Xcode:"
+          echo "Selected Developer Directory:"
+          xcode-select -p
+
+          echo "Selected Xcode version:"
           xcodebuild -version
 
-      - name: Build ZodiacApp
+      - name: Inspect project format
         run: |
-          xcodebuild \
-            -project ZodiacApp.xcodeproj \
-            -scheme ZodiacApp \
-            -configuration Debug \
-            -sdk iphonesimulator \
-            -destination 'generic/platform=iOS Simulator' \
-            CODE_SIGNING_ALLOWED=NO \
-            build
+          grep "objectVersion" ZodiacApp.xcodeproj/project.pbxproj
