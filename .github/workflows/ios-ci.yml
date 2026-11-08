@@ -16,9 +16,10 @@ jobs:
     runs-on: macos-15
 
     steps:
-      - name: Show available Xcode versions
+       - name: Select Xcode 27.0
         run: |
-          ls /Applications | grep Xcode
+          sudo xcode-select -s /Applications/Xcode_27.0.app/Contents/Developer
+          xcodebuild -versionp Xcode
           xcodebuild -version
 
       - name: Checkout repository
