@@ -1,0 +1,24 @@
+# macOS
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+*.xccheckout
+xcuserdata/
+
+# Swift Package Manager
+.build/
+Packages/
+
+# Xcode temporary files
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Secrets
+Secrets.swift
+*.p12
+*.mobileprovision
