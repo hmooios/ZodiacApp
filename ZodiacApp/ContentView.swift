@@ -36,25 +36,29 @@ struct ContentView: View {
                     LazyVGrid(columns: columns, spacing: 16) {
 
                         ForEach(ZodiacData.all) { zodiac in
+                            NavigationLink {
+                                ZodiacDetailView(zodiac: zodiac)
+                            } label: {
+                                VStack(spacing: 12) {
 
-                            VStack(spacing: 12) {
+                                    Text(zodiac.symbol)
+                                        .font(.system(size: 40))
 
-                                Text(zodiac.symbol)
-                                    .font(.system(size: 40))
+                                    Text(zodiac.name)
+                                        .font(.headline)
 
-                                Text(zodiac.name)
-                                    .font(.headline)
-
-                                Text(zodiac.dateRange)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+                                    Text(zodiac.dateRange)
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 24)
+                                .background(Color.purple.opacity(0.1))
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: 16)
+                                )
                             }
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 24)
-                            .background(Color.purple.opacity(0.1))
-                            .clipShape(
-                                RoundedRectangle(cornerRadius: 16)
-                            )
+                            .buttonStyle(.plain)
                         }
                     }
                 }
