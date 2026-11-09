@@ -13,9 +13,9 @@ on:
 
 jobs:
   build:
-    name: Build ZodiacApp
+    name: Build and Test ZodiacApp
     runs-on: xcode-27
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -33,3 +33,16 @@ jobs:
             -destination 'generic/platform=iOS Simulator' \
             CODE_SIGNING_ALLOWED=NO \
             build
+
+      - name: Show Available Simulators
+        run: xcrun simctl list devices available
+
+      - name: Run Unit Tests
+        run: |
+          xcodebuild \
+            -project ZodiacApp.xcodeproj \
+            -scheme ZodiacApp \
+            -configuration Debug \
+            -destination 'platform=iOS Simulator,name=iPhone 17' \
+            CODE_SIGNING_ALLOWED=NO \
+            test
